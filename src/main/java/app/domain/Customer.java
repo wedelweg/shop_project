@@ -6,18 +6,18 @@ import java.util.Objects;
 
 //POJO - Plain Old Java Object
 public class Customer {
-    private final long id;
+    private final Long id;
     private boolean isActive;
     private String name;
     private final List<Product> products = new ArrayList<>();
 
-    public Customer(long id, boolean isActive, String name) {
+    public Customer(Long id, boolean isActive, String name) {
         this.id = id;
         this.isActive = isActive;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public class Customer {
     public boolean equals(Object o) {
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return id == customer.id && isActive == customer.isActive && Objects.equals(name, customer.name) && Objects.equals(products, customer.products);
+        return isActive == customer.isActive && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(products, customer.products);
     }
 
     @Override

@@ -3,7 +3,7 @@ package app.domain;
 import java.util.Objects;
 
 public class Product {
-    private final long id;
+    private final Long id;
     private boolean isActive;
     private String name;
     private double price;
@@ -15,7 +15,7 @@ public class Product {
         this.price = price;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -47,7 +47,7 @@ public class Product {
     public boolean equals(Object o) {
         if (!(o instanceof Product)) return false;
         Product product = (Product) o;
-        return id == product.id && isActive == product.isActive && Double.compare(price, product.price) == 0 && Objects.equals(name, product.name);
+        return isActive == product.isActive && Double.compare(price, product.price) == 0 && Objects.equals(id, product.id) && Objects.equals(name, product.name);
     }
 
     @Override
