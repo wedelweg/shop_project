@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-//POJO - Plain Old Java Object
 public class Customer {
-    private final Long id;
+    private Long id;
     private boolean isActive;
     private String name;
     private final List<Product> products = new ArrayList<>();
 
-    public Customer(Long id, boolean isActive, String name) {
-        this.id = id;
+    public Customer(boolean isActive, String name) {
         this.isActive = isActive;
         this.name = name;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) { // ← этот метод обязателен
+        this.id = id;
     }
 
     public boolean isActive() {
@@ -41,25 +43,5 @@ public class Customer {
         return products;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Customer)) return false;
-        Customer customer = (Customer) o;
-        return isActive == customer.isActive && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(products, customer.products);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, isActive, name, products);
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", isActive=" + isActive +
-                ", name='" + name + '\'' +
-                ", products=" + products +
-                '}';
-    }
+    // equals(), hashCode(), toString() — по желанию
 }
