@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//POJO - Plain Old Java Object
 public class Customer {
     private Long id;
     private boolean isActive;
@@ -15,12 +16,12 @@ public class Customer {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setId(Long id) { // ← этот метод обязателен
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public boolean isActive() {
@@ -43,5 +44,25 @@ public class Customer {
         return products;
     }
 
-    // equals(), hashCode(), toString() — по желанию
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return isActive == customer.isActive && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(products, customer.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isActive, name, products);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", isActive=" + isActive +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }
