@@ -51,14 +51,42 @@ public class ProductRepositoryMap implements ProductRepository {
         Long id = product.getId();
         double newPrice = product.getPrice();
         String newName = product.getName();
+        boolean newActive = product.isActive();
 
         Product oldProduct = findById(id);
 
         if (oldProduct != null) {
             oldProduct.setName(newName);
             oldProduct.setPrice(newPrice);
+            oldProduct.setActive(newActive);
         }
 
         return oldProduct;
     }
+
+//
+//    public static void main(String[] args) {
+//        ProductRepository repository = new ProductRepositoryMap();
+//        //TODO check null field name
+//
+//        repository.save(new Product(true, "Coffee", 3));
+//
+//        repository.save(new Product(false, "Baget", 4));
+//
+//
+//        System.out.println(repository.findAll());
+//
+//        System.out.println(repository.findById(2L));
+//
+//        System.out.println("=============DELETE==============");
+//        repository.deleteById(1L);
+//        System.out.println(repository.findById(1L));
+//
+//        System.out.println("=============UPDATE==============");
+//        Product newProduct = new Product(true, "Baguette", 7); // создаём новый объект
+//        newProduct.setId(2L); // указываем ID продукта, который хотим обновить
+//        System.out.println(repository.updateById(newProduct));
+//
+//    }
+
 }
