@@ -7,7 +7,6 @@ import app.exceptions.ProductUpdateException;
 import app.repositories.ProductRepository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
@@ -23,13 +22,14 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new ProductSaveException("Product cannot be null");
         }
+
         String name = product.getName();
-        if (name == null || name.trim().isEmpty() || name.length() < 3){
+        if (name == null || name.trim().isEmpty() || name.length() < 3) {
             throw new ProductSaveException("Product name should be at least 3 characters long");
         }
 
-        if (product.getPrice() <= 0){
-            throw new ProductSaveException("Product Price cannot be negative or zero");
+        if (product.getPrice() <= 0) {
+            throw new ProductSaveException("Product price cannot be negative and zero");
         }
 
         product.setActive(true);
@@ -47,28 +47,32 @@ public class ProductServiceImpl implements ProductService {
     public Product getById(Long id) {
         Product product = repository.findById(id);
 
-        if (product == null || !product.isActive()){
-            throw new ProductNotFoundException("Product with id = " + id + " not found");
+        if (product == null || !product.isActive()) {
+            throw new ProductNotFoundException("Product with id = " + id + " nor found");
         }
-
         return product;
     }
 
     @Override
     public void update(Product product) {
+        if (product == null) {
+            throw new ProductUpdateException("Product cannot be null");
+        }
+
         Long id = product.getId();
-        if ( id == null || id <0){
+        if (id == null || id < 0) {
             throw new ProductUpdateException("Product id should be positive");
         }
 
         String name = product.getName();
-        if (name == null || name.trim().isEmpty() || name.length() < 3){
+        if (name == null || name.trim().isEmpty() || name.length() < 3) {
             throw new ProductUpdateException("Product name should be at least 3 characters long");
         }
 
-        if (product.getPrice() <= 0){
-            throw new ProductUpdateException("Product Price cannot be negative or zero");
+        if (product.getPrice() <= 0) {
+            throw new ProductUpdateException("Product price cannot be negative and zero");
         }
+
         repository.updateById(product);
     }
 
@@ -79,23 +83,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteByName(String name) {
-        Product product = getAllActiveProducts().stream()
+        Product product = getAllActiveProducts()
+                .stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()
                 .orElse(null);
 
-        if (product == null){
-            throw new ProductNotFoundException("Product with name = " + name + " not found");
+        if (product == null) {
+            throw new ProductNotFoundException("Product with name = " + name + " nor found");
         }
         product.setActive(false);
     }
 
     @Override
     public void restoreById(Long id) {
-        Product product = repository.findById(id);
-        if (product != null && !product.isActive()) {
-            product.setActive(true);
-        }
+        getById(id).setActive(true);
     }
 
     @Override
@@ -106,14 +108,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public double getActiveProductsTotalCost() {
         return getAllActiveProducts().stream()
-            .mapToDouble(p -> p.getPrice())
-            .sum();
+                .mapToDouble(p -> p.getPrice())
+                .sum();
     }
 
     @Override
     public double getActiveProductsAveragePrice() {
         return getAllActiveProducts().stream()
                 .mapToDouble(p -> p.getPrice())
-                .average().orElse(0);
+                .average()
+                .orElse(0);
     }
 }

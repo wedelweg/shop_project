@@ -63,30 +63,25 @@ public class ProductRepositoryMap implements ProductRepository {
 
         return oldProduct;
     }
-
 //
 //    public static void main(String[] args) {
 //        ProductRepository repository = new ProductRepositoryMap();
+//
+//        System.out.println(repository.save(new Product(true, "Coffee", 3)));
 //        //TODO check null field name
-//
-//        repository.save(new Product(true, "Coffee", 3));
-//
-//        repository.save(new Product(false, "Baget", 4));
-//
+////        System.out.println(repository.save("cat"));
+//        System.out.println(repository.save(new Product(false, "Baget", 4)));
 //
 //        System.out.println(repository.findAll());
 //
 //        System.out.println(repository.findById(2L));
 //
-//        System.out.println("=============DELETE==============");
+//        System.out.println("=========== Delete ==============");
 //        repository.deleteById(1L);
 //        System.out.println(repository.findById(1L));
-//
-//        System.out.println("=============UPDATE==============");
-//        Product newProduct = new Product(true, "Baguette", 7); // создаём новый объект
-//        newProduct.setId(2L); // указываем ID продукта, который хотим обновить
+//        System.out.println("=========== Update ==============");
+//        Product newProduct = new Product(true, "Baguette", 7);
+//        newProduct.setId(2L);
 //        System.out.println(repository.updateById(newProduct));
-//
 //    }
-
 }
